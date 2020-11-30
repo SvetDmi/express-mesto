@@ -1,11 +1,12 @@
 {
   "name": "express-mesto",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project Mesto-backend",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "SvetDmi",
