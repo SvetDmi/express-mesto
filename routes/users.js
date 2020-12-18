@@ -7,5 +7,4 @@ router.post('/users', createUser);
 router.patch('/user/me', updateProfile);
 router.patch('/user/me/avatar', updateAvatar);
 
-
 module.exports = router;

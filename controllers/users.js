@@ -28,13 +28,13 @@ const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((user) => {
-      return res.status(201).send({ data: user })
+      return res.status(201).send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'Client Error') {
-        return res.status(400).send({ error400 })
+        return res.status(400).send({ error400 });
       }
-      return res.status(500).send({ error500 })
+      return res.status(500).send({ error500 });
     });
 };
 
@@ -45,7 +45,7 @@ const updateProfile = (req, res) => {
       if (!user) {
         return res.status(404).send({ error404 });
       }
-      return res.status(201).send({ data: user })
+      return res.status(201).send({ data: user });
     })
     .catch((err) => res.status(400).send({ error400 }));
 };
@@ -57,7 +57,7 @@ const updateAvatar = (req, res) => {
       if (!user) {
         return res.status(404).send({ error404 });
       }
-      return res.status(201).send({ data: user })
+      return res.status(201).send({ data: user });
     })
     .catch((err) => res.status(400).send({ error400 }));
 };

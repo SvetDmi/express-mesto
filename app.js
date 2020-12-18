@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const usersRouter = require('./routes/users.js');
@@ -18,11 +17,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '5fda5183e8f27d1c5c7a7635'
+    _id: '5fda5183e8f27d1c5c7a7635',
   };
 
   next();

@@ -7,13 +7,13 @@ const createCard = (req, res) => {
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => {
-      return res.status(201).send({ data: card })
+      return res.status(201).send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'Client Error') {
-        return res.status(400).send({ error400 })
+        return res.status(400).send({ error400 });
       }
-      return res.status(500).send({ error500 })
+      return res.status(500).send({ error500 });
     });
 };
 
@@ -49,9 +49,9 @@ const putLike = (req, res) => {
       if (!card) {
         return res.status(404).send({ error404 });
       }
-      return res.status(201).send({ data: card })
+      return res.status(201).send({ data: card });
     })
-    .catch((err) => res.status(500).send({ error500 }))
+    .catch((err) => res.status(500).send({ error500 }));
 };
 
 const deleteLike = (req, res) => {
@@ -64,9 +64,9 @@ const deleteLike = (req, res) => {
       if (!card) {
         return res.status(404).send({ error404 });
       }
-      return res.status(201).send({ data: card })
+      return res.status(201).send({ data: card });
     })
-    .catch((err) => res.status(500).send({ error500 }))
+    .catch((err) => res.status(500).send({ error500 }));
 };
 
 module.exports = { getCards, createCard, deleteCard, putLike, deleteLike };
