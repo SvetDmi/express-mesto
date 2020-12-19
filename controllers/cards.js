@@ -10,7 +10,7 @@ const createCard = (req, res) => {
       return res.status(201).send({ data: card });
     })
     .catch((err) => {
-      if (err.name === 'Client Error') {
+      if (err.name === 'ValidatorError') {
         return res.status(400).send({ error400 });
       }
       return res.status(500).send({ error500 });
@@ -19,25 +19,25 @@ const createCard = (req, res) => {
 
 const getCards = (req, res) => {
   Card.find({})
-    .populate('owner')
     .then((cards) => {
-      if (!cards) {
-        return res.status(404).send({ error404 });
-      }
       return res.status(200).send({ data: cards });
     })
-    .catch((err) => res.status(500).send({ error500 }));
+    .catch((err) => {
+      return res.status(500).send({ error500 });
+    });
 };
 
 const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params._id)
     .then((card) => {
-      if (!card) {
-        return res.status(404).send({ error404 });
-      }
       return res.status(201).send({ data: card })
     })
-    .catch((err) => res.status(500).send({ error500 }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res.status(404).send({ error404 });
+      }
+      return res.status(500).send({ error500 });
+    });
 };
 
 const putLike = (req, res) => {
@@ -46,12 +46,14 @@ const putLike = (req, res) => {
     { $addToSet: { likes: req.user._id } },
     { new: true })
     .then((card) => {
-      if (!card) {
-        return res.status(404).send({ error404 });
-      }
       return res.status(201).send({ data: card });
     })
-    .catch((err) => res.status(500).send({ error500 }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res.status(404).send({ error404 });
+      }
+      return res.status(500).send({ error500 });
+    });
 };
 
 const deleteLike = (req, res) => {
@@ -61,12 +63,14 @@ const deleteLike = (req, res) => {
     { new: true })
 
     .then((card) => {
-      if (!card) {
-        return res.status(404).send({ error404 });
-      }
       return res.status(201).send({ data: card });
     })
-    .catch((err) => res.status(500).send({ error500 }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res.status(404).send({ error404 });
+      }
+      return res.status(500).send({ error500 });
+    });
 };
 
 module.exports = { getCards, createCard, deleteCard, putLike, deleteLike };
