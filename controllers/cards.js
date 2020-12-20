@@ -6,14 +6,12 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => {
-      return res.status(201).send({ data: card });
-    })
+    .then((card) => res.status(201).send({ data: card }))
     .catch((err) => {
-      if (err.name === 'ValidatorError') {
-        return res.status(400).send({ error400 });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send(error400);
       }
-      return res.status(500).send({ error500 });
+      return res.status(500).send(error500);
     });
 };
 
@@ -23,20 +21,23 @@ const getCards = (req, res) => {
       return res.status(200).send({ data: cards });
     })
     .catch((err) => {
-      return res.status(500).send({ error500 });
+      return res.status(500).send(error500);
     });
 };
 
 const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params._id)
     .then((card) => {
-      return res.status(201).send({ data: card })
+      if (!card) {
+        return res.status(404).send(error404);
+      }
+      return res.status(200).send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return res.status(404).send({ error404 });
+        return res.status(404).send(error404);
       }
-      return res.status(500).send({ error500 });
+      return res.status(500).send(error500);
     });
 };
 
@@ -46,13 +47,16 @@ const putLike = (req, res) => {
     { $addToSet: { likes: req.user._id } },
     { new: true })
     .then((card) => {
-      return res.status(201).send({ data: card });
+      if (!card) {
+        return res.status(404).send(error404);
+      }
+      return res.status(200).send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return res.status(404).send({ error404 });
+        return res.status(404).send(error404);
       }
-      return res.status(500).send({ error500 });
+      return res.status(500).send(error500);
     });
 };
 
@@ -63,13 +67,16 @@ const deleteLike = (req, res) => {
     { new: true })
 
     .then((card) => {
-      return res.status(201).send({ data: card });
+      if (!card) {
+        return res.status(404).send(error404);
+      }
+      return res.status(200).send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return res.status(404).send({ error404 });
+        return res.status(404).send(error404);
       }
-      return res.status(500).send({ error500 });
+      return res.status(500).send(error500);
     });
 };
 

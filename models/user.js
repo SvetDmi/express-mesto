@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return regex.test(v)
+        return regex.test(v),
       },
-      message: 'Не получается загрузить аватар, проверьте правильность ссылки'
-    }
+      message: 'Не получается загрузить аватар, проверьте правильность ссылки',
+    },
   },
 
 });
