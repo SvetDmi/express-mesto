@@ -42,15 +42,13 @@ const updateProfile = (req, res) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return res.status(400).send(error400);
-      }
-      if (err.name === 'CastError') {
+      } else if (err.name === 'CastError') {
         return res.status(404).send(error404);
       }
-      return res.status(500).send(error500);
+      else { return res.status(500).send(error500) };
     });
 };
 
-// Я надеюсь, я правильно поняла, что при обновлении профиля и аватара в catch нужна проверка и на ValindationError, и на CastError
 
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
@@ -64,11 +62,13 @@ const updateAvatar = (req, res) => {
       if (err.name === 'ValidationError') {
         return res.status(400).send(error400);
       }
-      if (err.name === 'CastError') {
+      else if (err.name === 'CastError') {
         return res.status(404).send(error404);
       }
-      return res.status(500).send(error500);
+      else { return res.status(500).send(error500) };
     });
 };
+
+// линтер очень ругался на else после return, сейчас я его переубедила, надеюсь новых критических замечаний не заработала
 
 module.exports = { getUsers, getUser, createUser, updateProfile, updateAvatar };
